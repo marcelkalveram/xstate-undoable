@@ -6,7 +6,17 @@ A wrapper to augment simple xState machines (not interpreted machines) with go-b
 
 While xState solved a lot of problems for me, not being able to go back in state history was a big deal-breaker. I had to extend the library to allow me to travel back in time. That's why I created this little wrapper around xState, which adds the pieces that were missing for me: going back, resetting the machine and retrieving the state machine's history.
 
-Be aware that this wrapper is stateful, storing the state machine's history in an internal array. This is contrary to what a simple non-interpreted state machine does, which is fully pure and doesn't store any internal state. This conflicts with the way that `transition` works (which is pure) since we're augmenting its behaviour to store its result. But this was an acceptable drawback for my use case, and I may consider extending this library with a `pure` version in the future.
+**How is this different from [History states](https://github.com/davidkpiano/xstate#history-states)?**
+
+History nodes allow you to transition back to the previous sub-state of a state node, but you can't go back any further in history.
+
+**Drawbacks**
+
+Be aware that this wrapper is stateful, storing the state machine's history in an internal array. This is contrary to what a simple non-interpreted state machine does, which is fully pure and doesn't store any internal state. 
+
+This conflicts with the way that `transition` works (which is pure) since we're augmenting its behaviour to store its result. But this was an acceptable drawback for my use case, and I may consider extending this library with a `pure` version in the future.
+
+This also means you can't use interpreted machines with go-back behaviour, because there's no way to send a `goBack` event to the interpreted state machine yet. I might try to implement this feature at some point in the future.
 
 # Installation
 

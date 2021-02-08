@@ -12,7 +12,7 @@ History nodes allow you to transition back to the previous sub-state of a state 
 
 **Drawbacks**
 
-Be aware that this wrapper is stateful, storing the state machine's history in an internal array. This is contrary to what a simple non-interpreted state machine does, which is fully pure and doesn't store any internal state. 
+Be aware that this wrapper is stateful, storing the state machine's history in an internal array. This is contrary to what a simple non-interpreted state machine does, which is fully pure and doesn't store any internal state.
 
 This conflicts with the way that `transition` works (which is pure) since we're augmenting its behaviour to store its result. But this was an acceptable drawback for my use case, and I may consider extending this library with a `pure` version in the future.
 
@@ -60,6 +60,7 @@ const previousState = undoable.goBack();
 ## API
 
 ### `goBack()`
+
 Goes back one step in state history
 
 ```
@@ -69,6 +70,7 @@ const previousState = undoable.goBack();
 ```
 
 ### `reset()`
+
 Sets the state machine back to its initial state
 
 ```
@@ -77,6 +79,7 @@ const initialState = undoable.reset();
 ```
 
 ### `getHistory()`
+
 Returns the state machine history as an array
 
 ```
@@ -88,4 +91,4 @@ const history = undoable.getHistory();
 
 # License
 
-MIT © Marcel Kalveram
+MIT

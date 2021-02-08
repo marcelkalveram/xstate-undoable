@@ -4,25 +4,41 @@ name: CI
 on: push
 
 jobs:
-  build:
+  test:
     name: Build, lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         node: ['10.x', '12.x', '14.x']
-        os: [ubuntu-latest, macOS-latest]    
+        os: [ubuntu-latest, macOS-latest]
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
 
       - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
 
       - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1                  
+        uses: bahmutov/npm-install@v1
 
       - name: Test
-        run: npm test        
+        run: npm test
+
+  build:
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm ci
+      - run: npm test
+      - name: Release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release

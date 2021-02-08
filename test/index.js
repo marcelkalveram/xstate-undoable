@@ -3,24 +3,26 @@ import { createMachine, assign } from 'xstate';
 import undoableMachine from '../src';
 
 const increment = assign({
-  amount: context => context.amount + 1
+  amount: (context) => context.amount + 1
 });
 
-const forwardMachine = createMachine({
-  id: 'forward',
-  initial: 'one',
-  states: {
-    one: { on: { FORWARD: { target: 'two', actions: 'increment' } } },
-    two: { on: { FORWARD: 'three' } },
-    three: { type: 'final' }
+const forwardMachine = createMachine(
+  {
+    id: 'forward',
+    initial: 'one',
+    states: {
+      one: { on: { FORWARD: { target: 'two', actions: 'increment' } } },
+      two: { on: { FORWARD: 'three' } },
+      three: { type: 'final' }
+    },
+    context: {
+      amount: 0
+    }
   },
-  context: {
-    amount: 0
+  {
+    actions: { increment }
   }
-
-}, {
-  actions: { increment }
-});
+);
 
 describe('Undoable machine tests', () => {
   it('should go back one step', () => {

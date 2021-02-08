@@ -11,10 +11,14 @@ export default (machine) => {
   };
 
   // iterate through history and replay each state transition
-  const replayHistory = machineHistory => machineHistory.reduce((acc, cur) => [
-    ...acc,
-    transition(acc[acc.length - 1], cur.event.type, cur.context),
-  ], []);
+  const replayHistory = (machineHistory) =>
+    machineHistory.reduce(
+      (acc, cur) => [
+        ...acc,
+        transition(acc[acc.length - 1], cur.event.type, cur.context)
+      ],
+      []
+    );
 
   undoableMachine.transition = (state, event, context) => {
     const nextState = machine.transition(state, event, context);

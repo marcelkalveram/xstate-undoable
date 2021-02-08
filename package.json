@@ -1,7 +1,9 @@
 {
   "name": "xstate-undoable",
-  "version": "0.0.0-development",
+  "author": "Marcel Kalveram <marcel.kalveram@googlemail.com>",
+  "license": "MIT",
   "description": "Undo behaviour for xState machines",
+  "version": "0.0.0-development",
   "main": "./lib/index.js",
   "scripts": {
     "build": "npm run clean && babel src --out-dir lib",
@@ -11,7 +13,7 @@
     "test": "npm run lint && npm run cover",
     "test:only": "mocha",
     "test:watch": "npm test -- --watch",
-    "semantic-release": "semantic-release --branches main"
+    "semantic-release": "semantic-release"
   },
   "files": [
     "lib"
@@ -25,8 +27,11 @@
     "xstate",
     "javascript"
   ],
-  "author": "Marcel Kalveram <marcel.kalveram@googlemail.com>",
-  "license": "MIT",
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
     "@babel/core": "^7.12.13",

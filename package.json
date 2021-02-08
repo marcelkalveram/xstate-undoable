@@ -11,7 +11,7 @@
     "test": "npm run lint && npm run cover",
     "test:only": "mocha",
     "test:watch": "npm test -- --watch",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release --branches main"
   },
   "files": [
     "lib"
